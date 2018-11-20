@@ -12,6 +12,7 @@ import AVFoundation
 class ViewController: UIViewController {
     
     var player: AVAudioPlayer?
+    let soundFilesArray = ["note1", "note2", "note3", "note4", "note5", "note6", "note7"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,32 +20,16 @@ class ViewController: UIViewController {
     
     
     @IBAction func notePressed(_ sender: UIButton) {
-        
-        if sender.tag == 1 {
-            // Play note1
-            playSound(fileName: "note1")
-        } else if sender.tag == 2 {
-            // Play note2
-            playSound(fileName: "note2")
-        } else if sender.tag == 3 {
-            // Play note3
-            playSound(fileName: "note3")
-        } else if sender.tag == 4 {
-            // Play note4
-            playSound(fileName: "note4")
-        } else if sender.tag == 5 {
-            // Play note5
-            playSound(fileName: "note5")
-        } else if sender.tag == 6 {
-            // Play note6
-            playSound(fileName: "note6")
-        } else if sender.tag == 7 {
-            // Play note7
-            playSound(fileName: "note7")
-        }
+        // Get the sound file name
+        var selectedSoundFileName: String = soundFilesArray[sender.tag - 1]
+        print(selectedSoundFileName)
+
+        // Play Sound
+        playSound(fileName: selectedSoundFileName)
     }
     
-    func playSound(fileName : String){
+    func playSound(fileName: String){
+        
         let url = Bundle.main.url(forResource: fileName, withExtension: "wav")!
         
         do {
@@ -53,9 +38,9 @@ class ViewController: UIViewController {
             sound.numberOfLoops = 1
             sound.prepareToPlay()
             sound.play()
-        } catch let error as Error{
+        } catch {
             // couldn't load file
-            print(error.localizedDescription)
+            print(error)
             
         }
     }
